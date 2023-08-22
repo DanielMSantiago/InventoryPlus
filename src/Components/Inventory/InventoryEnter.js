@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TableBody,
   TableCell,
@@ -19,11 +19,23 @@ import {
   InventoryContainer,
   OrderItemsTable,
   InventoryPageBtn,
+  MakeInput,
+  ModelInput,
 } from "./styles.ts";
 
-export const InventoryEnter = (props) => {
-  const { products } = props;
+export const InventoryEnter = () => {
+  const [rows, setRows] = useState([{ values: [""] }]);
 
+  const addRow = () => {
+    const newRow = { values: [""] };
+    setRows([...rows, newRow]);
+  };
+
+  const handleValueChange = (rowIndex, columnIndex, newValue) => {
+    const updatedRows = [...rows];
+    updatedRows[rowIndex].values[columnIndex] = newValue;
+    setRows(updatedRows);
+  };
   return (
     <InventoryContainer>
       <InventoryFormContainer>
@@ -57,10 +69,121 @@ export const InventoryEnter = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableCell></TableCell>
+            {rows.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {row.values.map((value, columnIndex) => (
+                  <TableCell key={columnIndex}>
+                    <MakeInput
+                      value={value}
+                      onChange={(event) =>
+                        handleValueChange(
+                          rowIndex,
+                          columnIndex,
+                          event.target.value
+                        )
+                      }
+                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
+                      fullWidth
+                      margin="dense"
+                    />
+                  </TableCell>
+                ))}
+                {row.values.map((value, columnIndex) => (
+                  <TableCell key={columnIndex}>
+                    <ModelInput
+                      value={value}
+                      onChange={(event) =>
+                        handleValueChange(
+                          rowIndex,
+                          columnIndex,
+                          event.target.value
+                        )
+                      }
+                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
+                      fullWidth
+                      margin="dense"
+                    />
+                  </TableCell>
+                ))}
+                {row.values.map((value, columnIndex) => (
+                  <TableCell key={columnIndex}>
+                    <ModelInput
+                      value={value}
+                      onChange={(event) =>
+                        handleValueChange(
+                          rowIndex,
+                          columnIndex,
+                          event.target.value
+                        )
+                      }
+                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
+                      fullWidth
+                      margin="dense"
+                    />
+                  </TableCell>
+                ))}
+                {row.values.map((value, columnIndex) => (
+                  <TableCell key={columnIndex}>
+                    <ModelInput
+                      value={value}
+                      onChange={(event) =>
+                        handleValueChange(
+                          rowIndex,
+                          columnIndex,
+                          event.target.value
+                        )
+                      }
+                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
+                      fullWidth
+                      margin="dense"
+                    />
+                  </TableCell>
+                ))}
+                {row.values.map((value, columnIndex) => (
+                  <TableCell key={columnIndex}>
+                    <ModelInput
+                      value={value}
+                      onChange={(event) =>
+                        handleValueChange(
+                          rowIndex,
+                          columnIndex,
+                          event.target.value
+                        )
+                      }
+                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
+                      fullWidth
+                      margin="dense"
+                    />
+                  </TableCell>
+                ))}
+                {row.values.map((value, columnIndex) => (
+                  <TableCell key={columnIndex}>
+                    <ModelInput
+                      value={value}
+                      onChange={(event) =>
+                        handleValueChange(
+                          rowIndex,
+                          columnIndex,
+                          event.target.value
+                        )
+                      }
+                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
+                      fullWidth
+                      margin="dense"
+                    />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+            <InventoryPageBtn
+              variant="contained"
+              color="primary"
+              onClick={addRow}
+            >
+              Add Row
+            </InventoryPageBtn>
           </TableBody>
         </OrderItemsTable>
-        <InventoryPageBtn variant="contained">Add Item</InventoryPageBtn>
       </TableContainer>
     </InventoryContainer>
   );

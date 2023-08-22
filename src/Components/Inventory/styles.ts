@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "@mui/material/Button";
-import { TextField, Table} from "@mui/material";
+import { TextField, Table, Checkbox} from "@mui/material";
 
 export const InventoryContainer = styled.div`
     
@@ -90,6 +90,24 @@ export const InventoryPageBtn = styled(Button)`
 export const OrderItemsTable = styled(Table)`
 `;
 
+export const PID = styled(TextField)`
+width: 23%;
+`;
+
+export const MakeInput = styled(TextField)`
+`;
+
+export const ModelInput = styled(TextField)`
+`;
+
+export const SerialInput = styled(TextField)`
+`;
+
+export const RecievedInput = styled(Checkbox)`
+`;
+
+export const RecievedAutoDate = styled(Date)`
+`;
 
 
 
