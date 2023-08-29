@@ -14,27 +14,34 @@ import {
   InventoryFormContainer,
   OrderDate,
   PONumber,
-  RecievedDate,
   Notes,
   InventoryContainer,
   OrderItemsTable,
   InventoryPageBtn,
   MakeInput,
   ModelInput,
+  ReceivedInput,
+  ReceivedAutoDate,
 } from "./styles.ts";
 
 export const InventoryEnter = () => {
-  const [rows, setRows] = useState([{ values: [""] }]);
+  const [rows, setRows] = useState([
+    { make: "", model: "", serial: "", received: false, receiveddate: "" },
+  ]);
 
   const addRow = () => {
     const newRow = { values: [""] };
     setRows([...rows, newRow]);
   };
 
-  const handleValueChange = (rowIndex, columnIndex, newValue) => {
+  const handleValueChange = (rowIndex, field, newValue) => {
     const updatedRows = [...rows];
-    updatedRows[rowIndex].values[columnIndex] = newValue;
+    updatedRows[rowIndex][field] = newValue;
     setRows(updatedRows);
+
+    if (field === "received" && newValue) {
+      updatedRows[rowIndex].receiveddate = new Date().toISOString();
+    }
   };
   return (
     <InventoryContainer>
@@ -45,8 +52,6 @@ export const InventoryEnter = () => {
         <DistributorDropdown />
         <label>Distributor Branch: </label>
         <DistributorBranch />
-        <label>Recieved Date: </label>
-        <RecievedDate />
         <label>Customer ID: </label>
         <CustomerID />
         <label>Customer Name: </label>
@@ -64,126 +69,79 @@ export const InventoryEnter = () => {
               <TableCell>Make</TableCell>
               <TableCell>Model</TableCell>
               <TableCell>Serial</TableCell>
-              <TableCell>Recieved</TableCell>
-              <TableCell>Recieved Date</TableCell>
+              <TableCell>Received</TableCell>
+              <TableCell>Received Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
-                {row.values.map((value, columnIndex) => (
-                  <TableCell key={columnIndex}>
-                    <MakeInput
-                      value={value}
-                      onChange={(event) =>
-                        handleValueChange(
-                          rowIndex,
-                          columnIndex,
-                          event.target.value
-                        )
-                      }
-                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
-                      fullWidth
-                      margin="dense"
-                    />
-                  </TableCell>
-                ))}
-                {row.values.map((value, columnIndex) => (
-                  <TableCell key={columnIndex}>
-                    <ModelInput
-                      value={value}
-                      onChange={(event) =>
-                        handleValueChange(
-                          rowIndex,
-                          columnIndex,
-                          event.target.value
-                        )
-                      }
-                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
-                      fullWidth
-                      margin="dense"
-                    />
-                  </TableCell>
-                ))}
-                {row.values.map((value, columnIndex) => (
-                  <TableCell key={columnIndex}>
-                    <ModelInput
-                      value={value}
-                      onChange={(event) =>
-                        handleValueChange(
-                          rowIndex,
-                          columnIndex,
-                          event.target.value
-                        )
-                      }
-                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
-                      fullWidth
-                      margin="dense"
-                    />
-                  </TableCell>
-                ))}
-                {row.values.map((value, columnIndex) => (
-                  <TableCell key={columnIndex}>
-                    <ModelInput
-                      value={value}
-                      onChange={(event) =>
-                        handleValueChange(
-                          rowIndex,
-                          columnIndex,
-                          event.target.value
-                        )
-                      }
-                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
-                      fullWidth
-                      margin="dense"
-                    />
-                  </TableCell>
-                ))}
-                {row.values.map((value, columnIndex) => (
-                  <TableCell key={columnIndex}>
-                    <ModelInput
-                      value={value}
-                      onChange={(event) =>
-                        handleValueChange(
-                          rowIndex,
-                          columnIndex,
-                          event.target.value
-                        )
-                      }
-                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
-                      fullWidth
-                      margin="dense"
-                    />
-                  </TableCell>
-                ))}
-                {row.values.map((value, columnIndex) => (
-                  <TableCell key={columnIndex}>
-                    <ModelInput
-                      value={value}
-                      onChange={(event) =>
-                        handleValueChange(
-                          rowIndex,
-                          columnIndex,
-                          event.target.value
-                        )
-                      }
-                      label={`Row ${rowIndex + 1}, Column ${columnIndex + 1}`}
-                      fullWidth
-                      margin="dense"
-                    />
-                  </TableCell>
-                ))}
+                <TableCell>
+                  <MakeInput
+                    value={row.pid}
+                    onChange={(event) =>
+                      handleValueChange(rowIndex, "PID", event.target.value)
+                    }
+                    label={`Row ${rowIndex + 1}, PID`}
+                    fullWidth
+                    margin="dense"
+                  />
+                </TableCell>
+                <TableCell>
+                  <ModelInput
+                    value={row.make}
+                    onChange={(event) =>
+                      handleValueChange(rowIndex, "make", event.target.value)
+                    }
+                    label={`Row ${rowIndex + 1}, Makes`}
+                    fullWidth
+                    margin="dense"
+                  />
+                </TableCell>
+                <TableCell>
+                  <ModelInput
+                    value={row.model}
+                    onChange={(event) =>
+                      handleValueChange(rowIndex, "model", event.target.value)
+                    }
+                    label={`Row ${rowIndex + 1}, Model`}
+                    fullWidth
+                    margin="dense"
+                  />
+                </TableCell>
+                <TableCell>
+                  <ModelInput
+                    value={row.serial}
+                    onChange={(event) =>
+                      handleValueChange(rowIndex, "serial", event.target.value)
+                    }
+                    label={`Row ${rowIndex + 1}, Serial Number`}
+                    fullWidth
+                    margin="dense"
+                  />
+                </TableCell>
+                <TableCell>
+                  <ReceivedInput
+                    value={row.received}
+                    onChange={(event) =>
+                      handleValueChange(
+                        rowIndex,
+                        "received",
+                        event.target.checked
+                      )
+                    }
+                    label={`Row ${rowIndex + 1}, Received`}
+                    fullWidth
+                    margin="dense"
+                  />
+                </TableCell>
+                <TableCell>{row.receiveddate}</TableCell>
+                {/* Repeat the same pattern for other cells */}
               </TableRow>
             ))}
-            <InventoryPageBtn
-              variant="contained"
-              color="primary"
-              onClick={addRow}
-            >
-              Add Row
-            </InventoryPageBtn>
           </TableBody>
         </OrderItemsTable>
+        <InventoryPageBtn onClick={addRow}>Add Row</InventoryPageBtn>
       </TableContainer>
     </InventoryContainer>
   );

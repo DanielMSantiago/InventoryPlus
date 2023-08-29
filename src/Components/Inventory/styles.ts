@@ -91,7 +91,6 @@ export const OrderItemsTable = styled(Table)`
 `;
 
 export const PID = styled(TextField)`
-width: 23%;
 `;
 
 export const MakeInput = styled(TextField)`
@@ -103,10 +102,10 @@ export const ModelInput = styled(TextField)`
 export const SerialInput = styled(TextField)`
 `;
 
-export const RecievedInput = styled(Checkbox)`
+export const ReceivedInput = styled(Checkbox)`
 `;
 
-export const RecievedAutoDate = styled(Date)`
+export const ReceivedAutoDate = styled(TextField)`
 `;
 
 
